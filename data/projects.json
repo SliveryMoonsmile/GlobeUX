@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "dataKind": "demo",
+  "projects": [
+    {
+      "id": "urban-tree-mapping-sf",
+      "name": "Urban Tree Mapping (San Francisco)",
+      "description": "Mapping urban canopy resilience",
+      "lat": 37.7749,
+      "lng": -122.4194,
+      "importance": 0.25,
+      "status": "active"
+    },
+    {
+      "id": "mosquito-watch-singapore",
+      "name": "Mosquito Watch (Singapore)",
+      "description": "Tracking disease vectors",
+      "lat": 1.3521,
+      "lng": 103.8198,
+      "importance": 0.3,
+      "status": "active"
+    },
+    {
+      "id": "coastal-monitor-sydney",
+      "name": "Coastal Monitor (Sydney)",
+      "description": "Erosion and tidal surveillance",
+      "lat": -33.8688,
+      "lng": 151.2093,
+      "importance": 0.2,
+      "status": "inactive"
+    }
+  ]
+}

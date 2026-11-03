@@ -1,109 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Citizen Science Globe</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: black;
-    }
-    #globeViz {
-      width: 100vw;
-      height: 100vh;
-    }
-  </style>
-</head>
-<body>
-  <div id="globeViz"></div>
-
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js';
-    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/controls/OrbitControls.js';
-    import Globe from 'https://esm.sh/three-globe';
-    
-    // Setup core Three.js scene
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.z = 300;
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('globeViz').appendChild(renderer.domElement);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-
-    // Lighting
-    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-    const light = new THREE.DirectionalLight(0xffffff, 0.5);
-    light.position.set(1, 1, 1);
-    scene.add(light);
-
-    // Citizen science project data
-    const projectData = [
-      {
-        lat: 37.7749,
-        lng: -122.4194,
-        importance: 0.25,
-        color: 'limegreen',
-        name: 'Urban Tree Mapping (San Francisco)',
-        description: 'Mapping urban canopy resilience',
-        status: 'active'
-      },
-      {
-        lat: 1.3521,
-        lng: 103.8198,
-        importance: 0.3,
-        color: 'skyblue',
-        name: 'Mosquito Watch (Singapore)',
-        description: 'Tracking disease vectors',
-        status: 'active'
-      },
-      {
-        lat: -33.8688,
-        lng: 151.2093,
-        importance: 0.2,
-        color: 'orange',
-        name: 'Coastal Monitor (Sydney)',
-        description: 'Erosion and tidal surveillance',
-        status: 'inactive'
-      }
-    ];
-
-    // Setup Globe
-    const globe = new Globe()
-      .globeImageUrl('https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg')
-      .backgroundImageUrl('https://cdn.jsdelivr.net/npm/three-globe/example/img/night-sky.png')
-      .pointLat('lat')
-      .pointLng('lng')
-      .pointAltitude('importance')
-      .pointColor('color')
-      .pointLabel(d => `
-        <b>${d.name}</b><br>
-        ${d.description}<br>
-        <i>Status:</i> ${d.status}
-      `);
-
-    globe.pointsData(projectData);
-    scene.add(globe);
-
-    // Resize handling
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A starter for exploring citizen-science projects on a 3D globe." />
+    <title>GlobeUX · Citizen science</title>
+  </head>
+  <body>
+    <main>
+      <aside aria-labelledby="title">
+        <p class="eyebrow">GlobeUX / Citizen science</p>
+        <h1 id="title">Explore our shared planet.</h1>
+        <p>Choose a project to locate it. Drag to orbit; scroll or pinch to zoom.</p>
+        <p class="notice">Demonstration data — these are sample projects, not verified research sites.</p>
+        <ul id="projects" aria-label="Sample projects"></ul>
+        <section id="details" aria-labelledby="project-name" hidden>
+          <h2 id="project-name"></h2>
+          <p id="project-description"></p>
+          <p id="project-location"></p>
+        </section>
+        <p class="legend"><span class="active">●</span> Active <span class="inactive">●</span> Inactive</p>
+        <p class="note">Marker height is a demonstration display weight, not a scientific measurement. Grid spacing: 10°.</p>
+        <p class="note">Basemap: <a href="https://www.npmjs.com/package/three-globe/v/2.45.6">three-globe example</a> · <a href="./third-party/three-globe-LICENSE.txt">License</a></p>
+        <p id="status" role="status" aria-live="polite">Loading the globe…</p>
+      </aside>
+      <div id="globe" role="img" aria-label="Interactive globe showing the sample projects listed alongside it"></div>
+    </main>
+    <noscript>This globe requires JavaScript. Sample project data is available in the repository’s data/projects.json file.</noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
