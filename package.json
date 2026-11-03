@@ -1,0 +1,32 @@
+{
+  "name": "globeux",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SliveryMoonsmile/GlobeUX.git"
+  },
+  "dependencies": {
+    "three": "0.187.0",
+    "three-globe": "2.45.6"
+  },
+  "devDependencies": {
+    "vite": "8.3.5",
+    "ajv": "8.20.0"
+  },
+  "private": true,
+  "type": "module",
+  "description": "A maintainable citizen-science globe starter",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "vite",
+    "predev": "npm run validate:data",
+    "validate:data": "node scripts/validate-data.mjs",
+    "test": "node --test",
+    "prebuild": "npm run validate:data",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "npm test && npm run build"
+  }
+}
